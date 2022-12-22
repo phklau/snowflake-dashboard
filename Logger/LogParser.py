@@ -11,8 +11,8 @@ class LogParser:
                      'Errortype': "Sythax",
                      'ErrorDescription': "Doesn`t go overwritten",
                      'Connections': 0,
-                     'Upload': 0,
-                     'Download': 0}
+                     'Upload': 0.0,
+                     'Download': 0.0}
 
     def __init__(self, pathToDb=r"./logs.sqlite"):
         self.__db = DictToDB(pathToDb, self.__defaultData)
@@ -45,8 +45,24 @@ class LogParser:
         else:
             try:
                 self.__m_data['Connections'] = int(re.search(r'\d+(?= connections.)', logline).group())
-                self.__m_data['Upload'] = int(re.search(r'\d+(?= MB,)', logline).group())
-                self.__m_data['Download'] = int(re.search(r'\d+(?= MB.)', logline).group())
+                uploadUnitScale = 1.0
+                upload = re.search(r'\d+(?= MB,)', logline)
+                if upload is None:
+                    upload = re.search(r'\d+(?= KB,)', logline)
+                    uploadUnitScale = 0.001
+                    if upload is None:
+                        upload = re.search(r'\d+(?= GB,)', logline)
+                        uploadUnitScale = 1000
+                self.__m_data['Upload'] = int(upload.group()) * uploadUnitScale  # TODO: Test conversions with debugger
+                downloadUnitScale = 1.0
+                download = re.search(r'\d+(?= MB\.)', logline)
+                if download is None:
+                    download = re.search(r'\d+(?= KB\.)', logline)
+                    downloadUnitScale = 0.001
+                    if download is None:
+                        download = re.search(r'\d+(?= GB\.)', logline)
+                        downloadUnitScale = 1000
+                self.__m_data['Download'] = int(download.group()) * downloadUnitScale
                 self.__m_data['Error'] = int(False)
                 self.__m_data['Errortype'] = ""
                 self.__m_data['ErrorDescription'] = ""
