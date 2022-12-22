@@ -11,10 +11,10 @@ if __name__ == "__main__":
         with open(logfileLocation) as file:
             content = file.readlines()
         for line in content:
-            parser.parseLog(line)
-            print(parser.getData())
+            print(parser.toDict(line))
+            print(parser.toDb(line))
     else:
         with fileinput.input() as f_input:
             for line in f_input:
-                parser.parseLog(line)
-                print(parser.getData())  # change to write in DB
+                parser.toDb(line)
+                # write still into logfile
