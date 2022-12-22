@@ -1,7 +1,9 @@
 import re
+from DictToDB import DictToDB
 
 
 class LogParser:
+    __db = None
     __m_data = {}
     __defaultData = {'Date': "",
                      'Time': "",
@@ -12,11 +14,21 @@ class LogParser:
                      'Upload': 0,
                      'Download': 0}
 
+    def __init__(self, pathToDb=r"./logs.sqlite"):
+        self.__db = DictToDB(pathToDb, self.__defaultData)
+
     def toDict(self, logline):
         if self.__parseLog(logline):
             return self.__m_data
         else:
             return None
+
+    def toDb(self, logline):
+        if self.__parseLog(logline):
+            self.__db.writeDictInDb(self.__m_data)
+            return True
+        else:
+            return False
 
     def __parseLog(self, logline):
         self.__m_data = self.__defaultData.copy()
