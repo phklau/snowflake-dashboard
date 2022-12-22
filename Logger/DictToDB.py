@@ -47,4 +47,17 @@ class DictToDB:
         self.__connection.close()
 
     def writeDictInDb(self, data: dict):
-        pass
+        with self.__connection:
+            # TODO: get rid of hardcoded stuff for more generic class
+            self.__cursor.execute("""
+            INSERT INTO {} VALUES 
+            ( NULL,
+             :Date, 
+             :Time, 
+             :Error, 
+             :Errortype, 
+             :ErrorDescription, 
+             :Connections, 
+             :Upload , 
+             :Download)
+            """.format(self.__tableName), data)
