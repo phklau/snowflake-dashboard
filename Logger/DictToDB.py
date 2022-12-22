@@ -6,11 +6,12 @@ class DictToDB:
     __connection = None
     __cursor = None
     __tableExists = False
+    __tableName = ""
 
     connected = False
 
-    def __init__(self, pathToDb, tablestruct, tablename="logdata"):
-        # Connect to DB
+    def __init__(self, pathToDb, sampleDict, tablename="logdata"):
+        self.__tableName = tablename
         try:
             self.__connection = sqlite3.connect(pathToDb)
         except:
@@ -28,11 +29,22 @@ class DictToDB:
                 # DEBUG: print(sqlite3.OperationalError)
                 self.__tableExists = True
             if not self.__tableExists:
-                for key, type in tablestruct.items():
+                for key, sampledata in sampleDict.items():
+                    if type(sampledata) == str:
+                        dataType = "TEXT"
+                    elif type(sampledata) == int:
+                        dataType = "INTEGER"
+                    elif type(sampledata) == float:
+                        dataType = "REAL"
+                    else:
+                        dataType = "BLOB"
                     self.__cursor.execute("""
                     ALTER TABLE {} ADD {} {}
-                    """.format(tablename, key, type))
+                    """.format(tablename, key, dataType))
 
     def __del__(self):
         self.__cursor.close()
         self.__connection.close()
+
+    def writeDictInDb(self, data: dict):
+        pass
