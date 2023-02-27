@@ -8,7 +8,7 @@ DB_PATH = r"./snowflakelogs.sqlite"
 DEBUGLOGFILE_PATH = r"./snowflakelogs.log"
 
 if __name__ == "__main__":
-    parser = LogParser()
+    parser = LogParser(DB_PATH)
     if debug:
         logfileLocation = "./logexmp.log"
         with open(logfileLocation) as file:
