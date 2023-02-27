@@ -32,19 +32,7 @@ class LogParser:
     def __parseLog(self, logline):
         self.__m_data = self.__defaultData.copy()
         self.__m_data['Timestamp'] = re.search(r'\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}', logline).group()
-        if re.search("ERROR", logline):
-            self.__m_data['Error'] = int(True)
-            try:
-                self.__m_data['Errortype'] = re.search(r'\w+(?= ERROR)', logline).group()
-                self.__m_data['Details'] = re.search(r'(?<=\d{2}:\d{2}:\d{2} )[^\)]+', logline).group()
-            except AttributeError:
-                self.__m_data['Errortype'] = "Parser"
-                self.__m_data['Details'] = logline
-        elif re.search("Proxy starting", logline) or re.search("NAT type:", logline):
-            self.__m_data['Error'] = int(False)
-            self.__m_data['Details'] = re.search(r'(?<=\d{2}:\d{2}:\d{2} ).+', logline).group()
-            self.__m_data['Errortype'] = ""
-        else:
+        if re.search("connections", logline):
             try:
                 self.__m_data['Connections'] = int(re.search(r'\d+(?= connections.)', logline).group())
                 uploadUnitScale = 1.0
@@ -68,6 +56,18 @@ class LogParser:
                 self.__m_data['Error'] = int(False)
                 self.__m_data['Errortype'] = ""
                 self.__m_data['Details'] = ""
+            except AttributeError:
+                self.__m_data['Errortype'] = "Parser"
+                self.__m_data['Details'] = logline
+        elif re.search("Proxy starting", logline) or re.search("NAT type:", logline):
+            self.__m_data['Error'] = int(False)
+            self.__m_data['Details'] = re.search(r'(?<=\d{2}:\d{2}:\d{2} ).+', logline).group()
+            self.__m_data['Errortype'] = ""
+        if re.search("ERROR", logline):
+            self.__m_data['Error'] = int(True)
+            try:
+                self.__m_data['Errortype'] = re.search(r'\w+(?= ERROR)', logline).group()
+                self.__m_data['Details'] = re.search(r'(?<=\d{2}:\d{2}:\d{2} )[^\)]+', logline).group()
             except AttributeError:
                 self.__m_data['Errortype'] = "Parser"
                 self.__m_data['Details'] = logline
