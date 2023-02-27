@@ -5,7 +5,8 @@ import fileinput
 debug = False
 
 DB_PATH = r"./snowflakelogs.sqlite"
-DEBUGLOGFILE_PATH = r"./snowflakelogs.log"
+LOGFILE_PATH = r"./snowflakelogs.log"
+STORE_IN_FILE_TOO = True
 
 if __name__ == "__main__":
     parser = LogParser(DB_PATH)
@@ -19,8 +20,9 @@ if __name__ == "__main__":
     else:
         with fileinput.input() as f_input:
             for line in f_input:
-                parser.toDb(DB_PATH)
+                parser.toDb(line)
                 # write still into logfile
-                with open(DEBUGLOGFILE_PATH, "a") as logfile:
-                    logfile.write(line)
+                if STORE_IN_FILE_TOO:
+                    with open(LOGFILE_PATH, "a") as logfile:
+                        logfile.write(line)
 
