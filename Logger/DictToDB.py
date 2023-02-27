@@ -50,7 +50,7 @@ class DictToDB:
              :Time, 
              :Error, 
              :Errortype, 
-             :ErrorDescription, 
+             :Details,
              :Connections, 
              :Upload , 
              :Download)

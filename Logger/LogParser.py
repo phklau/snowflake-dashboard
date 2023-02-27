@@ -3,18 +3,17 @@ from DictToDB import DictToDB
 
 
 class LogParser:
-    __db = None
-    __m_data = {}
-    __defaultData = {'Date': "",
-                     'Time': "",
-                     'Error': int(True),
-                     'Errortype': "Sythax",
-                     'ErrorDescription': "Doesn`t go overwritten",
-                     'Connections': 0,
-                     'Upload': 0.0,
-                     'Download': 0.0}
 
     def __init__(self, pathToDb=r"./logs.sqlite"):
+        self.__db = None
+        self.__m_data = {}
+        self.__defaultData = {'Timestamp': "",
+                         'Error': int(True),
+                         'Errortype': "Sythax",
+                         'Details': "Doesn`t got overwritten",
+                         'Connections': 0,
+                         'Upload': 0.0,
+                         'Download': 0.0}
         self.__db = DictToDB(pathToDb, self.__defaultData)
 
     def toDict(self, logline):
@@ -38,10 +37,10 @@ class LogParser:
             self.__m_data['Error'] = int(True)
             try:
                 self.__m_data['Errortype'] = re.search(r'\w+(?= ERROR)', logline).group()
-                self.__m_data['ErrorDescription'] = re.search(r'(?<=\d{2}:\d{2}:\d{2} )[^\)]+', logline).group()
+                self.__m_data['Details'] = re.search(r'(?<=\d{2}:\d{2}:\d{2} )[^\)]+', logline).group()
             except AttributeError:
                 self.__m_data['Errortype'] = "Parser"
-                self.__m_data['ErrorDescription'] = logline
+                self.__m_data['Details'] = logline
         else:
             try:
                 self.__m_data['Connections'] = int(re.search(r'\d+(?= connections.)', logline).group())
@@ -65,8 +64,8 @@ class LogParser:
                 self.__m_data['Download'] = int(download.group()) * downloadUnitScale
                 self.__m_data['Error'] = int(False)
                 self.__m_data['Errortype'] = ""
-                self.__m_data['ErrorDescription'] = ""
+                self.__m_data['Details'] = ""
             except AttributeError:
                 self.__m_data['Errortype'] = "Parser"
-                self.__m_data['ErrorDescription'] = logline
+                self.__m_data['Details'] = logline
         return bool(self.__m_data != self.__defaultData)
