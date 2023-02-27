@@ -40,6 +40,10 @@ class LogParser:
             except AttributeError:
                 self.__m_data['Errortype'] = "Parser"
                 self.__m_data['Details'] = logline
+        elif re.search("Proxy starting", logline) or re.search("NAT type:", logline):
+            self.__m_data['Error'] = int(False)
+            self.__m_data['Details'] = re.search(r'(?<=\d{2}:\d{2}:\d{2} ).+', logline).group()
+            self.__m_data['Errortype'] = ""
         else:
             try:
                 self.__m_data['Connections'] = int(re.search(r'\d+(?= connections.)', logline).group())
