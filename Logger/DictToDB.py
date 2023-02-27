@@ -11,7 +11,6 @@ class DictToDB:
             self.__connection = sqlite3.connect(pathToDb)
         except:
             self.connected = False
-        self.connected = True
         if self.connected:
             self.__cursor = self.__connection.cursor()
             # Check if Table exists
