@@ -2,7 +2,7 @@
 
 from LogParser import LogParser
 import fileinput
-debug = True
+debug = False
 
 DB_PATH = r"./snowflakelogs.sqlite"
 DEBUGLOGFILE_PATH = r"./snowflakelogs.log"
