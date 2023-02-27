@@ -3,15 +3,10 @@ import sqlite3
 
 class DictToDB:
 
-    __connection = None
-    __cursor = None
-    __tableExists = False
-    __tableName = ""
-
-    connected = False
-
     def __init__(self, pathToDb, sampleDict, tablename="logdata"):
         self.__tableName = tablename
+        self.connected = True
+        self.__tableExists = False
         try:
             self.__connection = sqlite3.connect(pathToDb)
         except:
