@@ -31,8 +31,7 @@ class LogParser:
 
     def __parseLog(self, logline):
         self.__m_data = self.__defaultData.copy()
-        self.__m_data['Date'] = re.search(r'[0-9]+\/[0-9]+\/[0-9]+', logline).group()
-        self.__m_data['Time'] = re.search(r'\d{2}:\d{2}:\d{2}', logline).group()
+        self.__m_data['Timestamp'] = re.search(r'\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}', logline).group()
         if re.search("ERROR", logline):
             self.__m_data['Error'] = int(True)
             try:

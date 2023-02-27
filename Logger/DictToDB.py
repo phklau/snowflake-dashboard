@@ -46,8 +46,7 @@ class DictToDB:
             self.__cursor.execute("""
             INSERT INTO {} VALUES 
             ( NULL,
-             :Date, 
-             :Time, 
+             :Timestamp, 
              :Error, 
              :Errortype, 
              :Details,
