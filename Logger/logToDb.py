@@ -2,11 +2,15 @@
 
 from LogParser import LogParser
 import fileinput
+import json
+
 debug = False
 
-DB_PATH = r"./snowflakelogs.sqlite"
-LOGFILE_PATH = r"./snowflakelogs.log"
-STORE_IN_FILE_TOO = True
+with open("../Settings/logger.json") as settings_json:
+    settings = json.load(settings_json)
+DB_PATH = settings["Path to database"]
+LOGFILE_PATH = settings["Path to logfile"]
+STORE_IN_FILE_TOO = settings["Store logs in file"]
 
 if __name__ == "__main__":
     parser = LogParser(DB_PATH)
