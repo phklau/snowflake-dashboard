@@ -1,0 +1,5 @@
+{
+  "Path to database":"PWD/snowflakelogs.sqlite",
+  "Path to logfile":"PWD/snowflakelogs.log",
+  "Store logs in file":true
+}

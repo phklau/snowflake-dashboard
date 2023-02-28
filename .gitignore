@@ -1,0 +1,5 @@
+# Pycharm IDE 
+*.idea
+Logger/__pycache__/*
+# SQLite DBs
+*.sqlite
