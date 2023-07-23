@@ -1,8 +1,11 @@
+import datetime
 import re
 from DictToDB import DictToDB
 
 
 class LogParser:
+    RAW_TIME_FORMAT = "%Y/%m/%d %H:%M:%S"
+    DB_TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
     def __init__(self, pathToDb=r"./logs.sqlite"):
         self.__db = None
@@ -31,7 +34,9 @@ class LogParser:
 
     def __parseLog(self, logline):
         self.__m_data = self.__defaultData.copy()
-        self.__m_data['Timestamp'] = re.search(r'\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}', logline).group()
+        raw_timestamp= re.search(r'\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}', logline).group()
+        raw_date_time = datetime.datetime.strptime(raw_timestamp, LogParser.RAW_TIME_FORMAT)
+        self.__m_data['Timestamp'] = raw_date_time.strftime(LogParser.DB_TIME_FORMAT)
         if re.search("connections", logline):
             try:
                 self.__m_data['Connections'] = int(re.search(r'\d+(?= connections.)', logline).group())
