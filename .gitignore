@@ -1,6 +1,8 @@
 # Pycharm IDE 
 *.idea
 Logger/__pycache__/*
+Dashboard/__pycache__/*
+Dashboard/pyenv/*
 # SQLite DBs
 *.sqlite
 # logfiles
