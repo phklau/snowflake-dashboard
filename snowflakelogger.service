@@ -1,0 +1,12 @@
+[Unit]
+Description=Running snowflake proxy with logging into database
+After=network.target
+
+[Service]
+ExecStart=INSTALL_PATH
+User=USER
+Group=GROUP
+
+[Install]
+WantedBy=default.target
+
