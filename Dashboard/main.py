@@ -1,9 +1,12 @@
 from SnowflakeLogs import SnowflakeLogs
 from datetime import datetime, timedelta
+import json
 
+with open("../Settings/settings.json") as settings_file
+    settings = json.load(settings_file)
+DB_PATH = settings["Path to database"]
 
 if __name__ == '__main__':
-    PATH_TO_DB = "./snowflakelogs.sqlite"
     try:
         logs = SnowflakeLogs(PATH_TO_DB)
     except Warning:
