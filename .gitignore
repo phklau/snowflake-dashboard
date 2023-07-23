@@ -3,3 +3,5 @@
 Logger/__pycache__/*
 # SQLite DBs
 *.sqlite
+# logfiles
+*.log
