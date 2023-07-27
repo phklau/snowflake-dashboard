@@ -10,5 +10,5 @@ DB_PATH = settings["Path to database"]
 app = Dash(__name__)
 app = layout.build_layout(app)
 
-
-#     app.run_server(debug=True)
+if __name__ == '__main__':
+    app.run_server(debug=True)
