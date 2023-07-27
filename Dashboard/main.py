@@ -1,5 +1,4 @@
-from SnowflakeLogs import SnowflakeLogs
-from datetime import datetime, timedelta
+from dash import Dash
 import json
 
 with open("../Settings/settings.json") as settings_file
