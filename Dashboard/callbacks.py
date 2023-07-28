@@ -11,10 +11,12 @@ DB_PATH = settings["Path to database"]
 
 
 def get_callbacks(app: Dash):
-
     @app.callback(
         Output('date-picker', 'start_date'),
         Output('date-picker', 'end_date'),
+        Output('day-button', 'className'),
+        Output('week-button', 'className'),
+        Output('month-button', 'className'),
         Input('day-button', 'n_clicks'),
         Input('week-button', 'n_clicks'),
         Input('month-button', 'n_clicks'),
@@ -29,9 +31,20 @@ def get_callbacks(app: Dash):
         }
         pressed_button = ctx.triggered_id
         start_date = end_date - time_range.get(pressed_button)
+        buttons_style = {
+            None: "",
+            "day-button": "button ml-1 is-light is-medium",
+            "week-button": "button ml-1 is-light is-medium",
+            "month-button": "button ml-1 is-light is-medium",
+        }
+        buttons_style[pressed_button] = "button ml-1 is-light is-medium is-focused is-active"
+
         return (
             start_date,
-            end_date
+            end_date,
+            buttons_style["day-button"],
+            buttons_style["week-button"],
+            buttons_style["month-button"],
         )
 
     @app.callback(
