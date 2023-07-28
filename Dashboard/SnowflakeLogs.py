@@ -92,6 +92,12 @@ class SnowflakeLogs:
         df["Connections"] = self.__buffer["Connections"]
         return df
 
+    def get_running_since(self):
+        return self.__running_since
+
+    def get_logging_since(self):
+        return self.__logging_since
+
     def __buffer_update_needed(self, request_from: datetime, request_till: datetime) -> bool:
         result = False
         result &= self.__buffer_from != request_from
