@@ -6,7 +6,7 @@ from dash.dcc import DatePickerRange
 
 
 def build_layout(app: Dash):
-    app.layout = html.Div(className="container is-fluid", children=[
+    app.layout = html.Div(className="container is-fluid", style={'background-color':'#7d4698'}, children=[
         build_header(),
         build_description_text(),
         build_selector(),
@@ -17,20 +17,23 @@ def build_layout(app: Dash):
 
 
 def build_header():
-    title = html.H1(className="title is-1 has-text-centered", children="Snowflake Dashboard")
+    title = html.H1(className="title is-1 has-text-centered has-text-grey-lighter",
+                    children="Snowflake Dashboard")
     div = html.Div(className="block mt-4", children=[title])
     return div
 
 
 def build_description_text():
-    link = html.A(children="https://snowflake.torproject.org", href="https://snowflake.torproject.org")
+    link = html.A(className="has-text-link-light",
+                  children="https://snowflake.torproject.org",
+                  href="https://snowflake.torproject.org")
     text = """
     This network is running a Snowflake-Proxy for
         the TOR-Network to
     help people overcome censorship and surveillance.
     For more info visit: 
     """
-    div = html.Div(className="block has-text-centered is-family-monospace", children=[html.P(children=[text, link])])
+    div = html.Div(className="block has-text-centered is-family-monospace has-text-light", children=[html.P(children=[text, link])])
     return div
 
 
