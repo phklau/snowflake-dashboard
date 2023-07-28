@@ -6,7 +6,7 @@ from dash.dcc import DatePickerRange
 
 
 def build_layout(app: Dash):
-    app.layout = html.Div(className="container is-fluid", style={'background-color':'#7d4698'}, children=[
+    app.layout = html.Div(className="container is-fluid", style={'background-color': '#7d4698'}, children=[
         build_header(),
         build_description_text(),
         build_selector(),
@@ -33,11 +33,13 @@ def build_description_text():
     help people overcome censorship and surveillance.
     For more info visit: 
     """
-    div = html.Div(className="block has-text-centered is-family-monospace has-text-light", children=[html.P(children=[text, link])])
+    div = html.Div(className="block has-text-centered is-family-monospace has-text-light",
+                   children=[html.P(children=[text, link])])
     return div
 
 
 def build_selector():
+    # TODO: Add settings for displayed dateformat
     date_range = dcc.DatePickerRange(id='date-picker')
     day_button = html.Button(className="button ml-5 is-light is-medium",
                              id='day-button', children="24h")
@@ -59,6 +61,7 @@ def build_characteristic_values():
                            children=[
                                html.Div(className="box", children=[
                                    html.P(className="title is-3 has-text-centered",
+                                          id="total-connections",
                                           children="13"),
                                    html.H1(className="title is-6 has-text-centered",
                                            children="Connections")
@@ -68,6 +71,7 @@ def build_characteristic_values():
                       children=[
                           html.Div(className="box", children=[
                               html.P(className="title is-3 has-text-centered",
+                                     id="total-upload",
                                      children="500 GB"),
                               html.H1(className="title is-6 has-text-centered",
                                       children="Upload")
@@ -77,20 +81,22 @@ def build_characteristic_values():
                         children=[
                             html.Div(className="box", children=[
                                 html.P(className="title is-3 has-text-centered",
+                                       id="total-download",
                                        children="12 GB"),
                                 html.H1(className="title is-6 has-text-centered",
                                         children="Download")
                             ])
                         ])
     errors = html.Div(className="column",
-                        children=[
-                            html.Div(className="box", children=[
-                                html.P(className="title is-3 has-text-centered",
-                                       children="12"),
-                                html.H1(className="title is-6 has-text-centered",
-                                        children="Errors")
-                            ])
-                        ])
+                      children=[
+                          html.Div(className="box", children=[
+                              html.P(className="title is-3 has-text-centered",
+                                     id="total-errors",
+                                     children="12"),
+                              html.H1(className="title is-6 has-text-centered",
+                                      children="Errors")
+                          ])
+                      ])
     columns = html.Div(className="columns", children=[connections, upload, download, errors])
     div = html.Div(className="block", children=[columns])
     return div
@@ -101,21 +107,21 @@ def build_charts_():
                            children=[
                                html.Div(className="box",
                                         children=[
-                                            dcc.Graph()
+                                            dcc.Graph(id="connections-graph")
                                         ])
                            ])
     upload = html.Div(className="column",
                       children=[
                           html.Div(className="box",
                                    children=[
-                                       dcc.Graph()
+                                       dcc.Graph(id="upload-graph")
                                    ]
                                    )])
     download = html.Div(className="column",
                         children=[
                             html.Div(className="box",
                                      children=[
-                                         dcc.Graph()
+                                         dcc.Graph("download-graph")
                                      ])
                         ])
     columns = html.Div(className="columns", children=[connections, upload, download])
