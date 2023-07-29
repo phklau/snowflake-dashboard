@@ -18,7 +18,7 @@ def build_layout(app: Dash):
 
 def build_header():
     title = html.H1(className="title is-1 has-text-centered has-text-grey-lighter",
-                    children="Snowflake Dashboard")
+                    children="Snowflake Dashboard ❄️")
     div = html.Div(className="block mt-4", children=[title])
     return div
 
@@ -103,27 +103,25 @@ def build_characteristic_values():
 
 
 def build_charts_():
-    connections = html.Div(className="column",
-                           children=[
-                               html.Div(className="box",
-                                        children=[
-                                            dcc.Graph(id="connections-graph")
-                                        ])
-                           ])
-    upload = html.Div(className="column",
-                      children=[
-                          html.Div(className="box",
-                                   children=[
-                                       dcc.Graph(id="upload-graph")
-                                   ]
-                                   )])
-    download = html.Div(className="column",
+    connections_upload_download = html.Div(className="column",
+                                           children=[
+                                               html.Div(className="box",
+                                                        children=[
+                                                            dcc.Graph(id="connections-graph")
+                                                        ]),
+                                               html.Div(className="box",
+                                                        children=[
+                                                            dcc.Graph(id="upload-download-graph")
+                                                        ]),
+                                           ])
+
+    error = html.Div(className="column",
                         children=[
                             html.Div(className="box",
                                      children=[
                                          dcc.Graph("download-graph")
                                      ])
                         ])
-    columns = html.Div(className="columns", children=[connections, upload, download])
+    columns = html.Div(className="columns", children=[connections_upload_download, error, ])
     div = html.Div(className="block", children=[columns])
     return div
