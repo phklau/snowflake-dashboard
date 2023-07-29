@@ -15,6 +15,9 @@ class SqliteDB:
     def is_db_connected(self) -> bool:
         return self.__connected
 
+    def close_connection(self):
+        self.__connection.close()
+
     def query_data(self, statement, params: tuple = ()):
         """
         Querry data in the connected db

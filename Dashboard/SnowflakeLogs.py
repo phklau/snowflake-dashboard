@@ -51,6 +51,9 @@ class SnowflakeLogs:
         if not self.__db.is_db_connected():
             raise Warning("Couldn't connect to db")
 
+    def __del__(self):
+        self.__db.close_connection()
+
     def __query_data(self, date_from: datetime, date_till: datetime):
         data = self.__db.get_logs_between(date_from, date_till)
         data_dict = {
