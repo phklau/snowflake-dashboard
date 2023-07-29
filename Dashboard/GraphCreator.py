@@ -34,7 +34,8 @@ class GraphCreator:
         max_value = self.traffic_data["Connections"].max()
         graph.update_layout(yaxis_range=[0, max_value * 1.1], height=150)
         trace = graph_objects.Scatter(x=connections_data.index, y=connections_data["Connections"],
-                                      line={'color': "dodgerblue"})
+                                      line={'color': "dodgerblue"},
+                                      fill='tozeroy')
         graph.add_trace(trace)
         return graph
 
