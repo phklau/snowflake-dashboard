@@ -103,19 +103,14 @@ def build_characteristic_values():
 
 
 def build_charts_():
-    connections_upload_download = html.Div(className="column",
-                                           children=[
-                                               html.Div(className="box",
-                                                        children=[
-                                                            html.H1(className="subtitle", children="Connections"),
-                                                            dcc.Graph(id="connections-graph"),
-                                                        ]),
-                                               html.Div(className="box",
-                                                        children=[
-                                                            html.H1(className="subtitle", children="Traffic"),
-                                                            dcc.Graph(id="upload-download-graph")
-                                                        ]),
-                                           ])
+    connections = html.Div(className="column",
+                           children=[
+                               html.Div(className="box",
+                                        children=[
+                                            html.H1(className="subtitle", children="Connections"),
+                                            dcc.Graph(id="connections-graph"),
+                                        ])
+                           ])
 
     error = html.Div(className="column",
                      children=[
@@ -123,15 +118,30 @@ def build_charts_():
                                   children=[
                                       html.H1(className="subtitle", children="Errors"),
                                       dcc.Graph("error-graph")
-                                  ]),
-                         html.Div(className="box", children=[
-                             html.Div(className="columns", children=[
-                                 html.H1(className="subtitle", children="Errortypes"),
-                                 html.Div(className="column", children=dcc.Graph("error-types-pie")),
-                                 html.Div(className="column", children=dcc.Graph("error-types-bar"))
-                             ]),
-                         ]),
+                                  ])
                      ])
-    columns = html.Div(className="columns", children=[connections_upload_download, error, ])
-    div = html.Div(className="block", children=[columns])
+
+    traffic = html.Div(className="column",
+                       children=[
+                           html.Div(className="box",
+                                    children=[
+                                        html.H1(className="subtitle", children="Traffic"),
+                                        dcc.Graph(id="upload-download-graph")
+                                    ]),
+                       ])
+
+    errortypes = html.Div(className="column",
+                          children=[
+                              html.Div(className="box", children=[
+                                  html.Div(className="columns", children=[
+                                      html.H1(className="subtitle", children="Errortypes"),
+                                      html.Div(className="column", children=dcc.Graph("error-types-pie")),
+                                      html.Div(className="column", children=dcc.Graph("error-types-bar"))
+                                  ]),
+                              ]),
+                          ])
+
+    connections_error = html.Div(className="block mb-1", children=html.Div(className="columns", children=[connections, error,]))
+    traffic_errortypes = html.Div(className="block", children=html.Div(className="columns ", children=[traffic, errortypes, ]))
+    div = html.Div(className="block", children=[connections_error, traffic_errortypes])
     return div
