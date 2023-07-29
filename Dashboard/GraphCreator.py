@@ -74,3 +74,23 @@ class GraphCreator:
                             legend={'yanchor': "middle", 'y': 0.5, 'xanchor': "right", 'x': 0},
                             )
         return graph
+
+    def create_error_bar(self):
+        data = self.error_data[self.error_data["Error"] == 1]
+        graph = px.histogram(
+            data,
+            y='Errortype',
+            orientation='h',
+            color='Errortype',
+            barmode='group'
+        )
+        graph.update_layout(height=150,
+                            margin={'l': 0, 'r': 0, 't': 0, 'b': 0},
+                            xaxis_title=None,
+                            yaxis_title=None,
+                            yaxis_visible=False,
+                            plot_bgcolor='rgb(255,255,255)',
+                            paper_bgcolor='rgb(255,255,255)',
+                            showlegend=False,
+                            )
+        return graph
