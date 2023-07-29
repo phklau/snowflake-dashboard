@@ -20,11 +20,11 @@ class GraphCreator:
     def __get_line_graph_prototype():
         graph = px.line()
         graph.update_layout(
-            plot_bgcolor='rgb(255,200,255)',
+            plot_bgcolor='rgb(255,255,255)',
             paper_bgcolor='rgb(255,255,255)',
             xaxis_title=None,
             yaxis_title=None,
-            margin={'l': 10, 'r': 10, 't': 10, 'b': 10},
+            margin={'l': 10, 'r': 10, 't': 0, 'b': 0},
         )
         return graph
 
