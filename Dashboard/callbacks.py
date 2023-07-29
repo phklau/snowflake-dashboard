@@ -1,4 +1,4 @@
-from dash import Dash, callback, Input, Output, ctx
+from dash import Dash, callback, Input, Output, ctx, html
 from datetime import datetime, date, timedelta
 import plotly.express as px
 from plotly import graph_objects
@@ -95,10 +95,14 @@ def get_callbacks(app: Dash):
 
         del logs
         return (
-            total_connections,
-            total_upload,
-            total_download,
-            total_errors,
+            [html.Img(className="mr-3", src='assets/connection.svg', style={'width': '25px', 'height': '25px'}),
+             total_connections],
+            [html.Img(className="mr-3", src='assets/arrow-up-bold.svg', style={'width': '25px', 'height': '25px'}),
+             total_upload],
+            [html.Img(className="mr-3", src='assets/arrow-down-bold.svg', style={'width': '25px', 'height': '25px'}),
+             total_download],
+            [html.Img(className="mr-3", src='assets/alert-circle.svg', style={'width': '25px', 'height': '25px'}),
+             total_errors],
             connections_fig,
             upload_download_fig,
             error_fig,

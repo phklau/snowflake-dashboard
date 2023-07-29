@@ -8,6 +8,8 @@ TODO
 
 ## Copyright and license
 
+- Icons: Pictogrammers Material Design Icons Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+
 - CSS Files(bulma framework): Code copyright 2023 Jeremy Thomas
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
