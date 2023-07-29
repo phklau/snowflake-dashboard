@@ -47,9 +47,12 @@ class GraphCreator:
         max_download = download_data_inverted.min()
         graph.update_layout(yaxis_range=[max_download * 1.1, max_upload * 1.1],
                             height=150,
-                            yaxis={'ticksuffix': " MB"})
-        upload_trace = graph_objects.Scatter(x=self.traffic_data.index, y=self.traffic_data[upload_key], name="Upload", fill='tozeroy')
-        download_trace = graph_objects.Scatter(x=self.traffic_data.index, y=download_data_inverted, name="Download", fill='tozeroy')
+                            yaxis={'ticksuffix': " MB"},
+                            legend={'orientation': "h", 'yanchor': "top", 'y': 0, 'xanchor': "right", 'x': 1})
+        upload_trace = graph_objects.Scatter(x=self.traffic_data.index, y=self.traffic_data[upload_key], name="Upload",
+                                             fill='tozeroy')
+        download_trace = graph_objects.Scatter(x=self.traffic_data.index, y=download_data_inverted, name="Download",
+                                               fill='tozeroy')
         graph.add_trace(download_trace)
         graph.add_trace(upload_trace)
         return graph
