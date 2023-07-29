@@ -57,6 +57,7 @@ def get_callbacks(app: Dash):
         Output('total-errors', 'children'),
         Output('connections-graph', 'figure'),
         Output('upload-download-graph', 'figure'),
+        Output('error-graph', 'figure'),
         Input('date-picker', 'start_date'),
         Input('date-picker', 'end_date'),
     )
@@ -74,6 +75,7 @@ def get_callbacks(app: Dash):
             total_errors = "No Data available"
             connections_fig = px.line()
             upload_download_fig = px.line()
+            error_fig = px.line()
         else:
             total_connections = "{:,}".format(logs.get_total_connections())
             total_upload = DataSize(logs.get_total_upload()).auto_format()
@@ -83,6 +85,7 @@ def get_callbacks(app: Dash):
             creator = GraphCreator(logs.get_buffered_logs())
             connections_fig = creator.create_connections_graph()
             upload_download_fig = creator.create_upload_download_graph()
+            error_fig = creator.create_error_graph()
 
         del logs
         return (
@@ -92,6 +95,7 @@ def get_callbacks(app: Dash):
             total_errors,
             connections_fig,
             upload_download_fig,
+            error_fig,
         )
 
     return app
