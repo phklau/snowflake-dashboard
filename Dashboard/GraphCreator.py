@@ -69,6 +69,8 @@ class GraphCreator:
         graph = px.pie(data, names='Errortype')
         graph.update_traces(textinfo='none')
         graph.update_layout(height=150,
-                            margin={'l': 10, 'r': 10, 't': 10, 'b': 10},
+                            margin={'l': 0, 'r': 0, 't': 0, 'b': 0},
+                            showlegend=True,
+                            legend={'yanchor': "middle", 'y': 0.5, 'xanchor': "right", 'x': 0},
                             )
         return graph
