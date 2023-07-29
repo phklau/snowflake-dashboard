@@ -59,6 +59,7 @@ def get_callbacks(app: Dash):
         Output('upload-download-graph', 'figure'),
         Output('error-graph', 'figure'),
         Output('error-types-pie', 'figure'),
+        Output('error-types-bar', 'figure'),
         Input('date-picker', 'start_date'),
         Input('date-picker', 'end_date'),
     )
@@ -78,6 +79,7 @@ def get_callbacks(app: Dash):
             upload_download_fig = px.line()
             error_fig = px.line()
             error_pie = px.pie()
+            error_bar = px.bar()
         else:
             total_connections = "{:,}".format(logs.get_total_connections())
             total_upload = DataSize(logs.get_total_upload()).auto_format()
@@ -89,6 +91,7 @@ def get_callbacks(app: Dash):
             upload_download_fig = creator.create_upload_download_graph()
             error_fig = creator.create_error_graph()
             error_pie = creator.create_error_pie()
+            error_bar = creator.create_error_bar()
 
         del logs
         return (
@@ -100,6 +103,7 @@ def get_callbacks(app: Dash):
             upload_download_fig,
             error_fig,
             error_pie,
+            error_bar,
         )
 
     return app
