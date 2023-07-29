@@ -26,3 +26,10 @@ class GraphCreator:
         )
         return graph
 
+    def create_connections_graph(self):
+        graph = self.__get_line_graph_prototype()
+        max_value = self.data["Connections"].max()
+        graph.update_layout(yaxis_range=[0, max_value * 1.1], height=150)
+        trace = graph_objects.Scatter(x=self.data.index, y=self.data["Connections"], line=dict(color="dodgerblue"))
+        graph.add_trace(trace)
+        return graph
