@@ -60,3 +60,12 @@ class GraphCreator:
         error_trace = graph_objects.Scatter(x=self.error_data.index, y=self.error_data["Error"])
         graph.add_trace(error_trace)
         return graph
+
+    def create_error_pie(self):
+        data = self.error_data[self.error_data["Error"] == 1]
+        graph = px.pie(data, names='Errortype')
+        graph.update_traces(textinfo='none')
+        graph.update_layout(height=150,
+                            margin={'l': 10, 'r': 10, 't': 10, 'b': 10},
+                            )
+        return graph
