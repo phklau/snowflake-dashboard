@@ -94,11 +94,17 @@ class SnowflakeLogs:
         df["Connections"] = self.__buffer["Connections"]
         return df
 
+    def get_buffered_logs(self):
+        return self.__buffer
+
     def get_running_since(self):
         return self.__format_sql_to_datetime(self.__db.running_since()[0][0])
 
     def get_logging_since(self):
         return self.__format_sql_to_datetime(self.__db.logging_since()[0][0])
+
+    def buffer_empty(self):
+        return self.__buffer.empty
 
     # for debugging only!!!
     def getDirectDbAccess(self):
