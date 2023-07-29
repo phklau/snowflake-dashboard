@@ -63,7 +63,7 @@ def build_characteristic_values():
                                    html.P(className="title is-3 has-text-centered",
                                           id="total-connections",
                                           children="13"),
-                                   html.H1(className="title is-6 has-text-centered",
+                                   html.H1(className="subtitle is-6 has-text-centered",
                                            children="Connections")
                                ])
                            ])
@@ -73,7 +73,7 @@ def build_characteristic_values():
                               html.P(className="title is-3 has-text-centered",
                                      id="total-upload",
                                      children="500 GB"),
-                              html.H1(className="title is-6 has-text-centered",
+                              html.H1(className="subtitle is-6 has-text-centered",
                                       children="Upload")
                           ])
                       ])
@@ -83,7 +83,7 @@ def build_characteristic_values():
                                 html.P(className="title is-3 has-text-centered",
                                        id="total-download",
                                        children="12 GB"),
-                                html.H1(className="title is-6 has-text-centered",
+                                html.H1(className="subtitle is-6 has-text-centered",
                                         children="Download")
                             ])
                         ])
@@ -93,7 +93,7 @@ def build_characteristic_values():
                               html.P(className="title is-3 has-text-centered",
                                      id="total-errors",
                                      children="12"),
-                              html.H1(className="title is-6 has-text-centered",
+                              html.H1(className="subtitle is-6 has-text-centered",
                                       children="Errors")
                           ])
                       ])
@@ -107,10 +107,12 @@ def build_charts_():
                                            children=[
                                                html.Div(className="box",
                                                         children=[
-                                                            dcc.Graph(id="connections-graph")
+                                                            html.H1(className="subtitle", children="Connections"),
+                                                            dcc.Graph(id="connections-graph"),
                                                         ]),
                                                html.Div(className="box",
                                                         children=[
+                                                            html.H1(className="subtitle", children="Traffic"),
                                                             dcc.Graph(id="upload-download-graph")
                                                         ]),
                                            ])
@@ -119,10 +121,12 @@ def build_charts_():
                      children=[
                          html.Div(className="box",
                                   children=[
+                                      html.H1(className="subtitle", children="Errors"),
                                       dcc.Graph("error-graph")
                                   ]),
                          html.Div(className="box", children=[
                              html.Div(className="columns", children=[
+                                 html.H1(className="subtitle", children="Errortypes"),
                                  html.Div(className="column", children=dcc.Graph("error-types-pie")),
                                  html.Div(className="column", children=dcc.Graph("error-types-bar"))
                              ]),
