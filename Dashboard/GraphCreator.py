@@ -53,3 +53,10 @@ class GraphCreator:
         graph.add_trace(download_trace)
         graph.add_trace(upload_trace)
         return graph
+
+    def create_error_graph(self):
+        graph = self.__get_line_graph_prototype()
+        graph.update_layout(yaxis_range=[-0.1, 1.1], height=150)
+        error_trace = graph_objects.Scatter(x=self.error_data.index, y=self.error_data["Error"])
+        graph.add_trace(error_trace)
+        return graph
