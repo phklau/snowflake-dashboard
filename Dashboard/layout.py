@@ -122,7 +122,10 @@ def build_charts_():
                                       dcc.Graph("error-graph")
                                   ]),
                          html.Div(className="box", children=[
-                             dcc.Graph("error-types-pie")
+                             html.Div(className="columns", children=[
+                                 html.Div(className="column", children=dcc.Graph("error-types-pie")),
+                                 html.Div(className="column", children=dcc.Graph("error-types-bar"))
+                             ]),
                          ]),
                      ])
     columns = html.Div(className="columns", children=[connections_upload_download, error, ])
