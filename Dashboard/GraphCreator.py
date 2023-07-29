@@ -60,7 +60,7 @@ class GraphCreator:
 
     def create_error_graph(self):
         graph = self.__get_line_graph_prototype()
-        graph.update_layout(yaxis_range=[-0.1, 1.1], height=150)
+        graph.update_layout(yaxis_range=[-0.1, 1.1], height=150, yaxis_visible=False,)
         error_trace = graph_objects.Scatter(x=self.error_data.index, y=self.error_data["Error"])
         graph.add_trace(error_trace)
         return graph
@@ -69,7 +69,7 @@ class GraphCreator:
         data = self.error_data[self.error_data["Error"] == 1]
         graph = px.pie(data, names='Errortype')
         graph.update_traces(textinfo='none')
-        graph.update_layout(height=150,
+        graph.update_layout(height=200,
                             margin={'l': 0, 'r': 0, 't': 0, 'b': 0},
                             showlegend=True,
                             legend={'yanchor': "middle", 'y': 0.5, 'xanchor': "right", 'x': 0},
@@ -85,7 +85,7 @@ class GraphCreator:
             color='Errortype',
             barmode='group'
         )
-        graph.update_layout(height=150,
+        graph.update_layout(height=200,
                             margin={'l': 0, 'r': 0, 't': 0, 'b': 0},
                             xaxis_title=None,
                             yaxis_title=None,
