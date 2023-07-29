@@ -33,3 +33,19 @@ class GraphCreator:
         trace = graph_objects.Scatter(x=self.data.index, y=self.data["Connections"], line=dict(color="dodgerblue"))
         graph.add_trace(trace)
         return graph
+
+    def create_upload_download_graph(self):
+        upload_key = "Upload"
+        download_key = "Download"
+        download_data_inverted = self.data[download_key].multiply(-1)
+        graph = self.__get_line_graph_prototype()
+        max_upload = self.data[upload_key].max()
+        max_download = download_data_inverted.min()
+        graph.update_layout(yaxis_range=[max_download * 1.1, max_upload * 1.1],
+                            height=150,
+                            yaxis={'ticksuffix': " MB"})
+        upload_trace = graph_objects.Scatter(x=self.data.index, y=self.data[upload_key], name="Upload", fill='tozeroy')
+        download_trace = graph_objects.Scatter(x=self.data.index, y=download_data_inverted, name="Download", fill='tozeroy')
+        graph.add_trace(download_trace)
+        graph.add_trace(upload_trace)
+        return graph
