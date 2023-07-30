@@ -1,6 +1,6 @@
 import pandas
 
-from SqliteDB import SqliteDB
+from Data.SqliteDB import SqliteDB
 from datetime import datetime, timedelta
 import pandas as pd
 

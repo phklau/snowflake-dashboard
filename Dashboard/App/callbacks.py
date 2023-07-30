@@ -3,11 +3,11 @@ from datetime import datetime, date, timedelta
 import plotly.express as px
 import json
 
-from SnowflakeLogs import SnowflakeLogs
-from format import DataSize
-from GraphCreator import GraphCreator
+from Data.SnowflakeLogs import SnowflakeLogs
+from Helpers.format import DataSize
+from Helpers.GraphCreator import GraphCreator
 
-with open("../Settings/testsettings.json") as settings_file:
+with open("../../Settings/testsettings.json") as settings_file:
     settings = json.load(settings_file)
 DB_PATH = settings["Path to database"]
 
@@ -94,13 +94,13 @@ def get_callbacks(app: Dash):
 
         del logs
         return (
-            [html.Img(className="mr-3", src='assets/connection.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3", src='../assets/connection.svg', style={'width': '25px', 'height': '25px'}),
              total_connections],
-            [html.Img(className="mr-3", src='assets/arrow-up-bold.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3", src='../assets/arrow-up-bold.svg', style={'width': '25px', 'height': '25px'}),
              total_upload],
-            [html.Img(className="mr-3", src='assets/arrow-down-bold.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3", src='../assets/arrow-down-bold.svg', style={'width': '25px', 'height': '25px'}),
              total_download],
-            [html.Img(className="mr-3", src='assets/alert-circle.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3", src='../assets/alert-circle.svg', style={'width': '25px', 'height': '25px'}),
              total_errors],
             connections_fig,
             upload_download_fig,

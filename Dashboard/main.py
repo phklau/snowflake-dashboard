@@ -1,7 +1,6 @@
 from dash import Dash
 
-import layout
-import callbacks
+from App import layout, callbacks
 
 app = Dash(__name__)
 app = layout.build_layout(app)
