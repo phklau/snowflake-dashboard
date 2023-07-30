@@ -6,8 +6,7 @@ from LogParser import LogParser
 import fileinput
 
 debug = False
-
-with open(Path(__file__).parent.joinpath("../Settings/logger.json")) as settings_json:
+with open(Path(__file__).parent.parent.joinpath("Settings/logger.json")) as settings_json:
     settings = json.load(settings_json)
 DB_PATH = settings["Path to database"]
 LOGFILE_PATH = settings["Path to logfile"]
