@@ -8,7 +8,8 @@ from Data.SnowflakeLogs import SnowflakeLogs
 from Helpers.format import DataSize
 from Helpers.GraphCreator import GraphCreator
 
-with open(Path(__file__).parent.joinpath("../Settings/settings.json")) as settings_file:
+settings_path = Path(__file__).parent.parent.parent.joinpath("Settings/logger.json")
+with open(settings_path) as settings_file:
     settings = json.load(settings_file)
 DB_PATH = settings["Path to database"]
 
