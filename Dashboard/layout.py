@@ -1,8 +1,4 @@
 from dash import Dash, html, dcc
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-from dash.dcc import DatePickerRange
 
 
 def build_layout(app: Dash):

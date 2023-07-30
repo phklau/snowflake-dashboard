@@ -1,7 +1,6 @@
-from dash import Dash, callback, Input, Output, ctx, html
+from dash import Dash, Input, Output, ctx, html
 from datetime import datetime, date, timedelta
 import plotly.express as px
-from plotly import graph_objects
 import json
 
 from SnowflakeLogs import SnowflakeLogs

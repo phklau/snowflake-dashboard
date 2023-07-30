@@ -1,7 +1,7 @@
 import plotly.express as px
 from plotly import graph_objects
 import pandas as pd
-from datetime import datetime, date, timedelta
+from datetime import timedelta
 
 
 class GraphCreator:
