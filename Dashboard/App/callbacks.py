@@ -1,13 +1,14 @@
 from dash import Dash, Input, Output, ctx, html
 from datetime import datetime, date, timedelta
 import plotly.express as px
+from pathlib import Path
 import json
 
 from Data.SnowflakeLogs import SnowflakeLogs
 from Helpers.format import DataSize
 from Helpers.GraphCreator import GraphCreator
 
-with open("../Settings/settings.json") as settings_file:
+with open(Path(__file__).parent.joinpath("../Settings/settings.json")) as settings_file:
     settings = json.load(settings_file)
 DB_PATH = settings["Path to database"]
 

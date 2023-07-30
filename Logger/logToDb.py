@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
+import json
+from pathlib import Path
 
 from LogParser import LogParser
 import fileinput
-import json
 
 debug = False
 
-with open("../Settings/logger.json") as settings_json:
+with open(Path(__file__).parent.joinpath("../Settings/logger.json")) as settings_json:
     settings = json.load(settings_json)
 DB_PATH = settings["Path to database"]
 LOGFILE_PATH = settings["Path to logfile"]
