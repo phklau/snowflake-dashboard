@@ -1,13 +1,15 @@
-from dash import Dash, Input, Output, ctx, html
+from dash import Dash, Input, Output, ctx, html, get_asset_url
 from datetime import datetime, date, timedelta
 import plotly.express as px
+from pathlib import Path
 import json
 
 from Data.SnowflakeLogs import SnowflakeLogs
 from Helpers.format import DataSize
 from Helpers.GraphCreator import GraphCreator
 
-with open("../Settings/settings.json") as settings_file:
+settings_path = Path(__file__).parent.parent.parent.joinpath("Settings/logger.json")
+with open(settings_path) as settings_file:
     settings = json.load(settings_file)
 DB_PATH = settings["Path to database"]
 
@@ -24,10 +26,10 @@ def get_callbacks(app: Dash):
         Input('month-button', 'n_clicks'),
     )
     def update_date_picker(day, week, month):
-        end_date = date.today()
+        end_date = datetime.now()
         time_range = {
-            None: timedelta(0),
-            "day-button": timedelta(0),
+            None: timedelta(days=1),
+            "day-button": timedelta(days=1),
             "week-button": timedelta(days=7),
             "month-button": timedelta(weeks=4),
         }
@@ -94,13 +96,21 @@ def get_callbacks(app: Dash):
 
         del logs
         return (
-            [html.Img(className="mr-3", src='../assets/connection.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3",
+                      src=get_asset_url('connection.svg'),
+                      style={'width': '25px', 'height': '25px'}),
              total_connections],
-            [html.Img(className="mr-3", src='../assets/arrow-up-bold.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3",
+                      src=get_asset_url('arrow-up-bold.svg'),
+                      style={'width': '25px', 'height': '25px'}),
              total_upload],
-            [html.Img(className="mr-3", src='../assets/arrow-down-bold.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3",
+                      src=get_asset_url('arrow-down-bold.svg'),
+                      style={'width': '25px', 'height': '25px'}),
              total_download],
-            [html.Img(className="mr-3", src='../assets/alert-circle.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3",
+                      src=get_asset_url('alert-circle.svg'),
+                      style={'width': '25px', 'height': '25px'}),
              total_errors],
             connections_fig,
             upload_download_fig,

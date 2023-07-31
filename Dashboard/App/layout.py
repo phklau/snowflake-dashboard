@@ -2,7 +2,7 @@ from dash import Dash, html, dcc
 
 
 def build_layout(app: Dash):
-    app.layout = html.Div(className="container is-fluid", style={'background-color': '#7d4698'}, children=[
+    app.layout = html.Div(className="container mt-0 is-fluid",  children=[
         build_header(),
         build_description_text(),
         build_selector(),
