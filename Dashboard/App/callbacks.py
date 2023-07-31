@@ -1,4 +1,4 @@
-from dash import Dash, Input, Output, ctx, html
+from dash import Dash, Input, Output, ctx, html, get_asset_url
 from datetime import datetime, date, timedelta
 import plotly.express as px
 from pathlib import Path
@@ -96,13 +96,21 @@ def get_callbacks(app: Dash):
 
         del logs
         return (
-            [html.Img(className="mr-3", src='../assets/connection.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3",
+                      src=get_asset_url('connection.svg'),
+                      style={'width': '25px', 'height': '25px'}),
              total_connections],
-            [html.Img(className="mr-3", src='../assets/arrow-up-bold.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3",
+                      src=get_asset_url('arrow-up-bold.svg'),
+                      style={'width': '25px', 'height': '25px'}),
              total_upload],
-            [html.Img(className="mr-3", src='../assets/arrow-down-bold.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3",
+                      src=get_asset_url('arrow-down-bold.svg'),
+                      style={'width': '25px', 'height': '25px'}),
              total_download],
-            [html.Img(className="mr-3", src='../assets/alert-circle.svg', style={'width': '25px', 'height': '25px'}),
+            [html.Img(className="mr-3",
+                      src=get_asset_url('alert-circle.svg'),
+                      style={'width': '25px', 'height': '25px'}),
              total_errors],
             connections_fig,
             upload_download_fig,
