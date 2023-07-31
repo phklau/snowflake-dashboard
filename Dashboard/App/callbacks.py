@@ -26,10 +26,10 @@ def get_callbacks(app: Dash):
         Input('month-button', 'n_clicks'),
     )
     def update_date_picker(day, week, month):
-        end_date = date.today()
+        end_date = datetime.now()
         time_range = {
-            None: timedelta(0),
-            "day-button": timedelta(0),
+            None: timedelta(days=1),
+            "day-button": timedelta(days=1),
             "week-button": timedelta(days=7),
             "month-button": timedelta(weeks=4),
         }
