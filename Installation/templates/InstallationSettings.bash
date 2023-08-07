@@ -1,6 +1,9 @@
-# Path to the database and logfiles where the logs are stored
-# Use absolute path or relative to the root of the repository
-DB_PATH="./"
-LOGFILE_PATH="./"
 # Path from where the webserver will serve the dashboard
 WEBAPP_PATH="/var/www/snowflake-dashboard/"
+# IP-Adress and Port/domain under which the website will be available
+SERVER_NAME=""
+# Path of the snowflake installation (root of repo)
+SNOWFLAKE_PATH=""
+# User and group under which snowflake will be executed
+SNOWFLAKE_USER=""
+SNOWFLAKE_GROUP=""
