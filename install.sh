@@ -117,7 +117,7 @@ install_apache () {
     cp ./Installation/templates/snowflake-dashboard.conf /etc/apache2/sites-available/
     sed -i "s/WEBAPP_PATH/${WEBAPP_PATH//\//\\/}/g" /etc/apache2/sites-available/snowflake-dashboard.conf
     sed -i "s/SERVER_NAME/${SERVER_NAME}/g" /etc/apache2/sites-available/snowflake-dashboard.conf
-    a2ensite snowflake-dashboard
+    a2ensite snowflake-dashboard.conf
     echo "Restart apache"
     systemctl restart apache2
 }
