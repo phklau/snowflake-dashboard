@@ -9,7 +9,7 @@ if APP_PATH not in sys.path:
 
 from App import layout, callbacks
 
-app = Dash(__name__, requests_pathname_prefix='/dashboard/')
+app = Dash(__name__)
 app = layout.build_layout(app)
 app = callbacks.get_callbacks(app)
 app.css.config.serve_locally = True

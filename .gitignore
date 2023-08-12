@@ -6,3 +6,8 @@
 *.sqlite
 # logfiles
 *.log
+# run script with personal path
+run.py
+# User settings
+Settings/*
+Installation/InstallationSettings.bash

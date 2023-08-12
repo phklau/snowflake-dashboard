@@ -3,7 +3,7 @@ Description=Running snowflake proxy with logging into database
 After=network.target
 
 [Service]
-ExecStart=INSTALL_PATH
+ExecStart=INSTALLATION_PATH/run.sh
 User=USER
 Group=GROUP
 
