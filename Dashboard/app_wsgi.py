@@ -12,6 +12,7 @@ from App import layout, callbacks
 app = Dash(__name__)
 app = layout.build_layout(app)
 app = callbacks.get_callbacks(app)
+app.title = "Snowflake Dash"
 app.css.config.serve_locally = True
 app.scripts.config.serve_locally = True
 
