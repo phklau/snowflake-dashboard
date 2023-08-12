@@ -24,7 +24,8 @@ preinstall_check () {
                 echo "It seems like you have already installed this app"
                 echo "use -u to update the app"
                 echo "Aborting ..."
-                exit fi
+                exit
+            fi
             if [ "$(id -u)" -ne 0 ]; then
                 echo "Run skript as root"
                 echo "Aborting ..."
@@ -116,7 +117,7 @@ install_apache () {
     cp ./Installation/templates/snowflake-dashboard.conf /etc/apache2/sites-available/
     sed -i "s/WEBAPP_PATH/${WEBAPP_PATH//\//\\/}/g" /etc/apache2/sites-available/snowflake-dashboard.conf
     sed -i "s/SERVER_NAME/${SERVER_NAME}/g" /etc/apache2/sites-available/snowflake-dashboard.conf
-    a2ensite snowflake-dashboard.conf
+    a2ensite snowflake-dashboard
     echo "Restart apache"
     systemctl restart apache2
 }
