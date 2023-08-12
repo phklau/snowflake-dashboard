@@ -2,6 +2,9 @@
 
 To have a more rewarding experience of hosting a snowflake server, snowflake-dashboard is giving an overview of how many people used your snowflake proxy to avoid censorship.
 
+![Screenshot of the running dashboard](images/Dashboard.png)
+
+
 This project provides:
 - python script to log the output of the snowflake proxy in a database
 - systemd service to run the proxy with logging in the backround
