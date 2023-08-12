@@ -24,7 +24,8 @@ preinstall_check () {
                 echo "It seems like you have already installed this app"
                 echo "use -u to update the app"
                 echo "Aborting ..."
-                exit fi
+                exit
+            fi
             if [ "$(id -u)" -ne 0 ]; then
                 echo "Run skript as root"
                 echo "Aborting ..."
