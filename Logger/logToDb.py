@@ -5,17 +5,21 @@ from pathlib import Path
 from LogParser import LogParser
 import fileinput
 
-debug = False
-with open(Path(__file__).parent.parent.joinpath("Settings/logger.json")) as settings_json:
-    settings = json.load(settings_json)
-DB_PATH = settings["Path to database"]
-LOGFILE_PATH = settings["Path to logfile"]
-STORE_IN_FILE_TOO = settings["Store logs in file"]
+debug = True
+if debug:
+    DB_PATH = "./snowflakelogs.sqlite"
+    LOGFILE_PATH = "./snowflakelogs_lowerV2-8-0.log"
+else:
+    with open(Path(__file__).parent.parent.joinpath("Settings/logger.json")) as settings_json:
+        settings = json.load(settings_json)
+    DB_PATH = settings["Path to database"]
+    LOGFILE_PATH = settings["Path to logfile"]
+    STORE_IN_FILE_TOO = settings["Store logs in file"]
 
 if __name__ == "__main__":
     parser = LogParser(DB_PATH)
     if debug:
-        logfileLocation = "./logexmp.log"
+        logfileLocation = LOGFILE_PATH
         with open(logfileLocation) as file:
             content = file.readlines()
         for line in content:
