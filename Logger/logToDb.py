@@ -1,21 +1,29 @@
 #!/usr/bin/env python3
 import json
 from pathlib import Path
+from packaging import version
 
-from LogParser import LogParser
+import LogParser
 import fileinput
 
-debug = False
+debug = True
+
 with open(Path(__file__).parent.parent.joinpath("Settings/logger.json")) as settings_json:
     settings = json.load(settings_json)
 DB_PATH = settings["Path to database"]
 LOGFILE_PATH = settings["Path to logfile"]
 STORE_IN_FILE_TOO = settings["Store logs in file"]
+SNOWFLAKE_VERSION = version.parse(settings["SnowflakeVersion"])
 
 if __name__ == "__main__":
-    parser = LogParser(DB_PATH)
+    # Handling for different formats of the log file data
+    if SNOWFLAKE_VERSION >= version.Version("2.8.0"):
+        parser = LogParser.LogParserSinceV2_8_0(DB_PATH)
+    else:
+        parser = LogParser.LogParserTillV2_8_0(DB_PATH)
+
     if debug:
-        logfileLocation = "./logexmp.log"
+        logfileLocation = LOGFILE_PATH
         with open(logfileLocation) as file:
             content = file.readlines()
         for line in content:
