@@ -3,6 +3,8 @@
 # set -x
 set -e
 
+SUPPORTED_SNOWFLAKE_VERSION="2.8.0"
+
 
 usage () {
     cat <<EOF
@@ -33,7 +35,7 @@ preinstall_check () {
             fi
             if [ ! -f "Installation/InstallationSettings.bash" ]; then
                 cp ./Installation/templates/InstallationSettings.bash ./Installation/
-                echo "Created installation settings file"
+                echo "Created installation settings file in Settings/InstallationSettings.bash"
                 echo "please set the variables and rerun this script"
                 exit
             fi
@@ -45,8 +47,8 @@ load_settings () {
             WEBAPP_PATH=${WEBAPP_PATH%/}
             SNOWFLAKE_PATH=${SNOWFLAKE_PATH%/}
 
-            if [[ $SNOWFLAKE_PATH == "" || $SNOWFLAKE_USER == "" || $SNOWFLAKE_GROUP == "" || SERVER_NAME == "" ]]; then
-                echo "No snowflake settings found"
+            if [[ $SNOWFLAKE_PATH == "" || $SNOWFLAKE_USER == "" || $SNOWFLAKE_GROUP == "" || $SERVER_NAME == ""]]; then
+                echo "Some of the snowflake settings variables might be empty"
                 echo "Please check again InstallationSettings.bash"
                 echo "Aborting ..."
                 exit
@@ -59,6 +61,19 @@ create_settings () {
     cp ./Installation/templates/*.json ./Settings/
     chown -R ${SNOWFLAKE_USER}:${SNOWFLAKE_GROUP} ./Settings/
     sed -i "s/PWD/${PWD//\//\\/}/g" ./Settings/dashboard.json
+    load_snowflake_version $SNOWFLAKE_PATH/proxy/proxy
+    sed -i "s/VERSION/${SNOWFLAKE_VERSION}/g" ./Settings/logger.json
+}
+
+# extract the snowflake version and check if it is supported
+# argument: path to the snowflake-proxy executable
+load_snowflake_version() {
+    local version_regex = "" #TODO: find regex !
+    SNOWFLAKE_VERSION = $1 --version | grep $version_regex
+    if dpkg --compare-versions SNOWFLAKE_VERSION gt SUPPORTED_SNOWFLAKE_VERSION; then
+        echo "WARNING!: snowflake version is not supported and might cause problems parsing the logs"
+        echo "Check the database if logs for errors of the type <Parser>"
+    fi
 }
 
 create_data_storage () {
