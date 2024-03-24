@@ -3,6 +3,8 @@
 # set -x
 set -e
 
+SUPPORTED_SNOWFLAKE_VERSION="2.8.0"
+
 
 usage () {
     cat <<EOF
@@ -45,8 +47,8 @@ load_settings () {
             WEBAPP_PATH=${WEBAPP_PATH%/}
             SNOWFLAKE_PATH=${SNOWFLAKE_PATH%/}
 
-            if [[ $SNOWFLAKE_PATH == "" || $SNOWFLAKE_USER == "" || $SNOWFLAKE_GROUP == "" || SERVER_NAME == "" ]]; then
-                echo "No snowflake settings found"
+            if [[ $SNOWFLAKE_PATH == "" || $SNOWFLAKE_USER == "" || $SNOWFLAKE_GROUP == "" || $SERVER_NAME == "" ]]; then
+                echo "Some of the snowflake settings variables might be empty"
                 echo "Please check again InstallationSettings.bash"
                 echo "Aborting ..."
                 exit
@@ -59,6 +61,19 @@ create_settings () {
     cp ./Installation/templates/*.json ./Settings/
     chown -R ${SNOWFLAKE_USER}:${SNOWFLAKE_GROUP} ./Settings/
     sed -i "s/PWD/${PWD//\//\\/}/g" ./Settings/dashboard.json
+    set_snowflake_version
+}
+
+# needs load_settings() run
+set_snowflake_version() {
+    local version_regex='[0-9]+\.[0-9]+\.?[0-9]+'
+    SNOWFLAKE_VERSION=$($SNOWFLAKE_PATH/proxy/proxy --version 2>&1 | grep -o -E $version_regex)
+    echo "Snowflake version $SNOWFLAKE_VERSION detected"
+    if dpkg --compare-versions $SNOWFLAKE_VERSION gt $SUPPORTED_SNOWFLAKE_VERSION; then
+        echo "WARNING!: snowflake version is not supported and might cause problems parsing the logs"
+        echo "Check the database if logs for errors of the type <Parser>"
+    fi
+    sed -i "s/VERSION/${SNOWFLAKE_VERSION}/g" ./Settings/logger.json
 }
 
 create_data_storage () {
@@ -183,8 +198,9 @@ main () {
         case $1 in
             -u | --update-all)
                 echo "Updating snowflake with logging service ..."
-                systemctl restart snowflake-with-logger.service
                 load_settings
+                set_snowflake_version
+                systemctl restart snowflake-with-logger.service
                 update_web_app
                 ;;
             --update-dashboard)
