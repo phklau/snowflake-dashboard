@@ -1,6 +1,6 @@
 # Path from where the webserver will serve the dashboard
 WEBAPP_PATH="/var/www/snowflake-dashboard/"
-# IP-Adress and Port/domain under which the website will be available
+# IP-Adress and Port/domain under which the dashboard will be available
 SERVER_NAME=""
 # Path of the snowflake installation (root of repo)
 SNOWFLAKE_PATH=""
