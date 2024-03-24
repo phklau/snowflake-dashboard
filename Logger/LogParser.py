@@ -153,3 +153,7 @@ class LogParserTillV2_8_0(AbstractLogParser):
 
     def _is_startup(self, logline: str) -> bool:
         return re.search("Proxy starting", logline) is not None or re.search("NAT type:", logline) is not None
+
+class LogParserSinceV2_8_0(LogParserTillV2_8_0):
+    def _parse_connections(self, logline: str) -> int:
+        return int(re.search(r'\d+(?= completed connections.)', logline).group())
