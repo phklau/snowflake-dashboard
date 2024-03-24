@@ -1,4 +1,5 @@
 {
+  "SnowflakeVersion": "VERSION",
   "Path to database":"/var/log/snowflake/snowflakelogs.sqlite",
   "Path to logfile":"/var/log/snowflake/snowflakelogs.log",
   "Store logs in file":true
