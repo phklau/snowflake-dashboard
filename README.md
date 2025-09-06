@@ -48,7 +48,8 @@ copys the new dashboard to the webserver.
 To only update the web app run `./install.sh --update-dashboard`.
 
 **Warning:** Make a backup befor running this script!
-The script has only yet been tested on a fresh installation of debian-bookworm.
+The script has only yet been tested on a fresh installation of debian-bookworm
+and debian-trixie.
 
 ## Manual
 
@@ -88,6 +89,7 @@ different init-system you have to set this up by your self.
 
 ## Dashboard
 
-- install pip requirments (use virtual environment to dont mess up your system
-  python!), `requirments.txt` could be found in `Dashboard/` 
+- install pip requirments (use virtual environment to don't mess up your system
+  python!), `requirments.txt` could be found in `Dashboard/` for the supported python
+  versions 3.11.2 and 3.13.5 of debian bookworm and trixie
 - setup wsgi server, calling wsgi-application in `app_wsgi.py` 
