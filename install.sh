@@ -33,8 +33,8 @@ preinstall_check () {
             fi
             if [ ! -f "Installation/InstallationSettings.bash" ]; then
                 cp ./Installation/templates/InstallationSettings.bash ./Installation/
-                echo "Created installation settings file"
-                echo "please set the variables and rerun this script"
+                echo "Created installation settings file Installation/InstallationSettings.bash"
+                echo "please set the variables  and rerun this script"
                 exit
             fi
             load_settings
