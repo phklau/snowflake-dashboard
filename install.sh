@@ -74,7 +74,31 @@ install_packages () {
     systemctl restart apache2
 }
 
+check_python_version () {
+    SUPPORTED_VERSIONS=("3.11.2" "3.13.5")
+    VERSION=$(python3 --version | grep -o -E '[0-9]+\.[0-9]+\.?[0-9]+')
+    SUPPORTED=false
+
+    for value in "${SUPPORTED_VERSIONS[@]}"
+    do
+        if [ "$value" = "$VERSION" ]; then
+            SUPPORTED=true
+            break
+        fi
+    done
+
+    if $SUPPORTED; then
+        echo $VERSION | sed -E 's/\./-/g'
+    fi
+}
+
 create_pyenv () {
+    echo "Checking if installed python version is supported ..."
+    VERSION=$(check_python_version)
+    if [ -z $VERSION ]; then
+        echo "Python Version not supported, please check the manual"
+        exit
+    fi
     echo "Creating python evironment in /usr/local/venvs/dashboard"
     LAST_PATH=$PWD
     if [ ! -d /usr/local/venvs ]; then
@@ -83,7 +107,7 @@ create_pyenv () {
     cd /usr/local/venvs
     python3 -m venv dashboard
     source dashboard/bin/activate
-    pip install -r ${LAST_PATH}/Dashboard/requirements.txt
+    pip install -r ${LAST_PATH}/Dashboard/requirements_${VERSION}.txt
     deactivate
     cd ${LAST_PATH}
 }
