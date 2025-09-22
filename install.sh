@@ -66,14 +66,14 @@ create_settings () {
 }
 
 # needs load_settings() run
-set_snowflake_version() {
+set_snowflake_version () {
     SNOWFLAKE_VERSION=$($SNOWFLAKE_PATH/proxy/proxy --version 2>&1 | grep -o -E $VERSION_REGEX)
     echo "Snowflake version $SNOWFLAKE_VERSION detected"
     if dpkg --compare-versions $SNOWFLAKE_VERSION gt $SUPPORTED_SNOWFLAKE_VERSION; then
         echo "WARNING!: snowflake version is not supported and might cause problems parsing the logs"
         echo "Check the database if logs for errors of the type <Parser>"
     fi
-    sed -i "s/VERSION/${SNOWFLAKE_VERSION}/g" ./Settings/logger.json
+    sed -i s/"[0-9]\+\.[0-9]\+\.[0-9]\+"/${SNOWFLAKE_VERSION}/g ./Settings/logger.json
 }
 
 create_data_storage () {
