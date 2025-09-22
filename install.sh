@@ -4,6 +4,7 @@
 set -e
 
 SUPPORTED_SNOWFLAKE_VERSION="2.9.2"
+VERSION_REGEX='[0-9]+\.[0-9]+\.?[0-9]+'
 
 
 usage () {
@@ -66,8 +67,7 @@ create_settings () {
 
 # needs load_settings() run
 set_snowflake_version() {
-    local version_regex='[0-9]+\.[0-9]+\.?[0-9]+'
-    SNOWFLAKE_VERSION=$($SNOWFLAKE_PATH/proxy/proxy --version 2>&1 | grep -o -E $version_regex)
+    SNOWFLAKE_VERSION=$($SNOWFLAKE_PATH/proxy/proxy --version 2>&1 | grep -o -E $VERSION_REGEX)
     echo "Snowflake version $SNOWFLAKE_VERSION detected"
     if dpkg --compare-versions $SNOWFLAKE_VERSION gt $SUPPORTED_SNOWFLAKE_VERSION; then
         echo "WARNING!: snowflake version is not supported and might cause problems parsing the logs"
@@ -91,7 +91,7 @@ install_packages () {
 
 check_python_version () {
     SUPPORTED_VERSIONS=("3.11.2" "3.13.5")
-    VERSION=$(python3 --version | grep -o -E '[0-9]+\.[0-9]+\.?[0-9]+')
+    VERSION=$(python3 --version | grep -o -E $VERSION_REGEX)
     SUPPORTED=false
 
     for value in "${SUPPORTED_VERSIONS[@]}"
