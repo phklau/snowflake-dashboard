@@ -210,13 +210,13 @@ main () {
             -i | --install)
                 preinstall_check
                 install_packages
-                # Logger
                 create_settings
-                create_data_storage
-                create_systemd_service
                 # Dashboard
                 create_pyenv
                 install_apache
+                # Logger
+                create_data_storage
+                create_systemd_service
                 ;;
 
             --install-service)
