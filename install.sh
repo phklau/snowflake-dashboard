@@ -3,7 +3,7 @@
 # set -x
 set -e
 
-SUPPORTED_SNOWFLAKE_VERSION="2.8.0"
+SUPPORTED_SNOWFLAKE_VERSION="2.9.2"
 
 
 usage () {
