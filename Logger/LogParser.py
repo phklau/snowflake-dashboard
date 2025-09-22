@@ -154,6 +154,19 @@ class LogParserTillV2_8_0(AbstractLogParser):
     def _is_startup(self, logline: str) -> bool:
         return re.search("Proxy starting", logline) is not None or re.search("NAT type:", logline) is not None
 
+
 class LogParserSinceV2_8_0(LogParserTillV2_8_0):
     def _parse_connections(self, logline: str) -> int:
         return int(re.search(r'\d+(?= completed)', logline).group())
+
+
+class LogParserSinceV2_10_0(LogParserSinceV2_8_0):
+    def _parse_upload_mb(self, logline: str) -> float:
+        unit_scale = 0.001
+        upload = re.search(r'(?<=↓ )\d+(?= KB)', logline)
+        return int(upload.group()) * unit_scale
+
+    def _parse_download_mb(self, logline: str) -> float:
+        unit_scale = 0.001
+        download = re.search(r'(?<=↑ )\d+(?= KB)', logline)
+        return int(download.group()) * unit_scale

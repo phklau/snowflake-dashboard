@@ -17,10 +17,14 @@ SNOWFLAKE_VERSION = version.parse(settings["SnowflakeVersion"])
 
 if __name__ == "__main__":
     # Handling for different formats of the log file data
-    if SNOWFLAKE_VERSION >= version.Version("2.8.0"):
-        parser = LogParser.LogParserSinceV2_8_0(DB_PATH)
-    else:
+    if SNOWFLAKE_VERSION < version.Version("2.8.0"):
         parser = LogParser.LogParserTillV2_8_0(DB_PATH)
+    elif SNOWFLAKE_VERSION < version.Version("2.10.0"):
+        parser = LogParser.LogParserSinceV2_8_0(DB_PATH)
+    elif SNOWFLAKE_VERSION <= version.Version("2.11.0"):
+        parser = LogParser.LogParserSinceV2_10_0(DB_PATH)
+    else:
+        parser = LogParser.LogParserSinceV2_10_0(DB_PATH)
 
     if debug:
         logfileLocation = LOGFILE_PATH
