@@ -36,9 +36,9 @@ if __name__ == "__main__":
     else:
         with fileinput.input() as f_input:
             for line in f_input:
-                parser.toDb(line)
+                parsed = parser.toDb(line)
                 # write still into logfile
-                if STORE_IN_FILE_TOO:
+                if (STORE_IN_FILE_TOO & parsed):
                     with open(LOGFILE_PATH, "a") as logfile:
                         logfile.write(line)
 
