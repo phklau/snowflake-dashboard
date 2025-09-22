@@ -156,4 +156,4 @@ class LogParserTillV2_8_0(AbstractLogParser):
 
 class LogParserSinceV2_8_0(LogParserTillV2_8_0):
     def _parse_connections(self, logline: str) -> int:
-        return int(re.search(r'\d+(?= completed connections.)', logline).group())
+        return int(re.search(r'\d+(?= completed)', logline).group())
