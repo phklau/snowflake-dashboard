@@ -24,7 +24,7 @@ class AbstractLogParser(abc.ABC):
         else:
             return None
 
-    def toDb(self, logline):
+    def toDb(self, logline) -> bool:
         if self._parse_log(logline):
             self.__db.writeDictInDb(self.__m_data)
             return True
@@ -87,7 +87,7 @@ class AbstractLogParser(abc.ABC):
     def _is_startup(self, logline: str) -> bool:
         raise NotImplementedError
 
-    def _parse_log(self, logline):
+    def _parse_log(self, logline) -> bool:
         self.__m_data = self.__defaultData.copy()
         raw_timestamp = self._parse_timestamp(logline)
         raw_date_time = datetime.datetime.strptime(raw_timestamp, self._get_log_time_format())
@@ -156,11 +156,13 @@ class LogParserTillV2_8_0(AbstractLogParser):
 
 
 class LogParserSinceV2_8_0(LogParserTillV2_8_0):
+
     def _parse_connections(self, logline: str) -> int:
         return int(re.search(r'\d+(?= completed)', logline).group())
 
 
 class LogParserSinceV2_10_0(LogParserSinceV2_8_0):
+
     def _parse_upload_mb(self, logline: str) -> float:
         unit_scale = 0.001
         upload = re.search(r'(?<=↓ )\d+(?= KB)', logline)
@@ -170,3 +172,35 @@ class LogParserSinceV2_10_0(LogParserSinceV2_8_0):
         unit_scale = 0.001
         download = re.search(r'(?<=↑ )\d+(?= KB)', logline)
         return int(download.group()) * unit_scale
+
+    def _parse_log(self, logline):
+        #if re.search(r'client connected', logline):
+        #    return False
+        self.__m_data = self.__defaultData.copy()
+        raw_timestamp = self._parse_timestamp(logline)
+        raw_date_time = datetime.datetime.strptime(raw_timestamp, self._get_log_time_format())
+        self.__m_data['Timestamp'] = raw_date_time.strftime(self._get_db_time_format())
+        if self._is_connection_data(logline):
+            try:
+                self.__m_data['Connections'] = self._parse_connections(logline)
+                self.__m_data['Upload'] = self._parse_upload_mb(logline)
+                self.__m_data['Download'] = self._parse_download_mb(logline)
+                self.__m_data['Error'] = int(False)
+                self.__m_data['Errortype'] = ""
+                self.__m_data['Details'] = ""
+            except AttributeError:
+                self.__m_data['Errortype'] = "Parser"
+                self.__m_data['Details'] = logline
+        elif self._is_startup(logline):
+            self.__m_data['Error'] = int(False)
+            self.__m_data['Details'] = self._parse_startup_details(logline)
+            self.__m_data['Errortype'] = ""
+        if re.search("ERROR", logline):
+            self.__m_data['Error'] = int(True)
+            try:
+                self.__m_data['Errortype'] = self._parse_error_type(logline)
+                self.__m_data['Details'] = self._parse_error_details(logline)
+            except AttributeError:
+                self.__m_data['Errortype'] = "Parser"
+                self.__m_data['Details'] = logline
+        return bool(self.__m_data != self.__defaultData)
